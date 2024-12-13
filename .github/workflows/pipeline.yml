@@ -13,10 +13,24 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        # Disabling shallow clones is recommended for improving the relevancy of reporting
         fetch-depth: 0
-    - name: SonarQube Scan
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install Requirements (Sonar Necessities)
+      run: pip install -r requirements.txt
+
+    - name: SonarCloud Scan
       uses: sonarsource/sonarcloud-github-action@v4
+      with:
+        args: >
+          -Dsonar.projectKey=leosilvasouza_devopslab
+          -Dsonar.organization=leosilvasouza
+          -Dsonar.sources=.
+          -Dsonar.host.url=https://sonarcloud.io
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         
