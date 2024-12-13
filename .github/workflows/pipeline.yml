@@ -29,8 +29,8 @@ jobs:
         uses: docker/login-action@v3      # https://github.com/marketplace/actions/docker-login#google-artifact-registry-gar
         with:
           registry: '${{ vars.GOOGLE_ARTIFACT }}'
-          username: '${{ secrets.USERNAME }}'
-          password: '${{ secrets.GOOGLE_CREDENTIALS }}'
+          username: '${{ vars.USERNAME }}'
+          password: '${{ vars.GOOGLE_CREDENTIALS }}'
 
       - name: Build Image
         run: |
