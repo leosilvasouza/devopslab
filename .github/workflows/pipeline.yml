@@ -111,3 +111,20 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NOTIFICATIONS_TOKEN }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK  
+
+  ZAP_DAST:
+      needs: Deploy
+      runs-on: ubuntu-latest
+      steps:
+        - name: ZAP Proxy Scan
+          uses: zaproxy/action-full-scan@v0.8.0
+          with:
+            token: ${{ secrets.ZAP_TOKEN }}
+            target: ${{ steps.deploy.outputs.url }}
+            rules_file_name: '.zap/rules.json' # Opcional: Defina regras específicas, caso necessário
+  
+        - name: Upload ZAP Report
+          uses: actions/upload-artifact@v3
+          with:
+            name: zap-report
+            path: report.xml
