@@ -122,10 +122,7 @@ jobs:
      issues: write
      pull-requests: write
      
-    steps:
-      - name: Validando a URL para ZAP Proxy Scan
-        run: 'curl "${{ needs.Deploy.outputs.deployment_url }}"'
-        
+    steps:   
       - name: ZAP Proxy Scan
         uses: zaproxy/action-full-scan@v0.8.0
         with:
