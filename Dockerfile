@@ -12,4 +12,4 @@ RUN pip install --trusted-host pypi.python.org -r requirements.txt
 RUN pip install flask-talisman
 
 # Garante que será iniciado a aplicação.
-CMD ["gunicorn", "app:app", "flask.py"]
+CMD ["gunicorn", "app:app"]
