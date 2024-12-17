@@ -91,6 +91,11 @@ jobs:
       - name: Validando a API
         run: 'curl "${{ steps.deploy.outputs.url }}"'
 
+      - name: Salvar URL do Deployment
+        run: |
+          echo "url=${{ steps.deploy.outputs.url }}" >> $GITHUB_ENV
+          echo "::set-output name=cloudrun_url::${{ steps.deploy.outputs.url }}"
+
       - name: Notificação Slack
         id: slack
         uses: slackapi/slack-github-action@v1.25.0
@@ -117,14 +122,14 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - name: Validando a URL para ZAP Proxy Scan
-          run: 'curl "${{ steps.deploy.outputs.url }}"'
+          run: 'curl "${{ needs.Deploy.outputs.cloudrun_url }}"'
           
         - name: ZAP Proxy Scan
           uses: zaproxy/action-full-scan@v0.8.0
           with:
             token: ${{ secrets.ZAP_TOKEN }}
-            target: "${{ steps.deploy.outputs.url }}"
-            #rules_file_name: '.zap/rules.json' # Opcional: Defina regras específicas, caso necessário
+            target: "${{ needs.Deploy.outputs.cloudrun_url }}"
+            rules_file_name: '.zap/rules.json' # Opcional: Defina regras específicas, caso necessário
   
         - name: Upload ZAP Report
           uses: actions/upload-artifact@v3
