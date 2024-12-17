@@ -69,7 +69,9 @@ jobs:
   Deploy:
     needs: Build
     runs-on: ubuntu-latest
-
+    outputs:
+      deployment_url: ${{ steps.save_url.outputs.cloudrun_url }}
+      
     steps:
       - name: Download do Repositório
         uses: actions/checkout@v4       # https://github.com/actions/checkout
@@ -85,7 +87,7 @@ jobs:
         with:
           service: ${{ vars.GOOGLE_MYAPP }}
           region: ${{ vars.GOOGLE_REGION }}
-          image:   ${{ vars.GOOGLE_ARTIFACT }}/${{ vars.GOOGLE_PROJECT_ID }}/${{ vars.GOOGLE_REPONAME }}/${{ vars.GOOGLE_MYAPP }}:latest
+          image: ${{ vars.GOOGLE_ARTIFACT }}/${{ vars.GOOGLE_PROJECT_ID }}/${{ vars.GOOGLE_REPONAME }}/${{ vars.GOOGLE_MYAPP }}:latest
           flags: '--allow-unauthenticated'
 
       - name: Validando a API
@@ -93,7 +95,7 @@ jobs:
 
       - name: Salvar URL do Deployment
         run: |
-          echo "url=${{ steps.deploy.outputs.url }}" >> $GITHUB_ENV
+          echo "cloudrun_url=${{ steps.deploy.outputs.url }}" >> $GITHUB_ENV
           echo "::set-output name=cloudrun_url::${{ steps.deploy.outputs.url }}"
 
       - name: Notificação Slack
@@ -122,13 +124,13 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - name: Validando a URL para ZAP Proxy Scan
-          run: 'curl "${{ needs.Deploy.outputs.cloudrun_url }}"'
+          run: 'curl "${{ needs.Deploy.outputs.deployment_url }}"'
           
         - name: ZAP Proxy Scan
           uses: zaproxy/action-full-scan@v0.8.0
           with:
             token: ${{ secrets.ZAP_TOKEN }}
-            target: "${{ needs.Deploy.outputs.cloudrun_url }}"
+            target: "${{ needs.Deploy.outputs.deployment_url }}"
             rules_file_name: '.zap/rules.json' # Opcional: Defina regras específicas, caso necessário
   
         - name: Upload ZAP Report
