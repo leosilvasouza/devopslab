@@ -70,7 +70,7 @@ jobs:
     needs: Build
     runs-on: ubuntu-latest
     outputs:
-      deployment_url: ${{ steps.save_url.outputs.cloudrun_url }}
+      deployment_url: ${{ steps.deploy.outputs.url }}
       
     steps:
       - name: Download do Repositório
@@ -119,22 +119,27 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NOTIFICATIONS_TOKEN }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK  
 
-  ZAP_DAST:
-      needs: Deploy
-      runs-on: ubuntu-latest
-      steps:
-        - name: Validando a URL para ZAP Proxy Scan
-          run: 'curl "${{ needs.Deploy.outputs.deployment_url }}"'
-          
-        - name: ZAP Proxy Scan
-          uses: zaproxy/action-full-scan@v0.8.0
-          with:
-            token: ${{ secrets.ZAP_TOKEN }}
-            target: "${{ needs.Deploy.outputs.deployment_url }}"
-            rules_file_name: '.zap/rules.json' # Opcional: Defina regras específicas, caso necessário
-  
-        - name: Upload ZAP Report
-          uses: actions/upload-artifact@v3
-          with:
-            name: zap-report
-            path: report.xml
+  DAST:
+    needs: Deploy
+    runs-on: ubuntu-latest
+    permissions:
+     contents: write
+     issues: write
+     pull-requests: write
+     
+    steps:
+      - name: Validando a URL para ZAP Proxy Scan
+        run: 'curl "${{ needs.Deploy.outputs.deployment_url }}"'
+        
+      - name: ZAP Proxy Scan
+        uses: zaproxy/action-full-scan@v0.8.0
+        with:
+          token: ${{ secrets.ZAP_TOKEN }}
+          target: "${{ needs.Deploy.outputs.deployment_url }}"
+          rules_file_name: '.zap/rules.json'
+
+      - name: Upload ZAP Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: zap-report
+          path: report.xml
