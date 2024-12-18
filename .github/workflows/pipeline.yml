@@ -49,10 +49,14 @@ jobs:
         run: pip install -r requirements.txt
         
       - name: Install Requirements
-        run:  pip install flask
+        run:  pip install flask flask-wtf pytest pytest-cov
               
       - name: Unit Test
-        run: python -m unittest -v test
+        run: |
+          python -m unittest -v test
+          coverage run --source=app -m pytest test.py
+          coverage report -m
+          coverage xml -i
 
       - name: Login no Artifact Registry
         uses: docker/login-action@v3
@@ -60,10 +64,14 @@ jobs:
           registry: '${{ vars.GOOGLE_ARTIFACT }}'
           username: _json_key
           password: '${{ secrets.GOOGLE_CREDENTIALS }}'
+      
+      - name: New Relic License
+        run: |
+          sed -i "s/licensekey/${{ secrets.NEWRELIC_KEY }}/g" Dockerfile    
 
       - name: Build Image
         run: |
-          docker build -t ${{ vars.GOOGLE_ARTIFACT }}/${{ vars.GOOGLE_PROJECT_ID }}/${{ vars.GOOGLE_REPONAME }}/${{ vars.GOOGLE_MYAPP }}:latest -f Dockerfile .
+          docker build --build-arg NEWRELIC_KEY=${{ secrets.NEWRELIC_KEY }} -t ${{ vars.GOOGLE_ARTIFACT }}/${{ vars.GOOGLE_PROJECT_ID }}/${{ vars.GOOGLE_REPONAME }}/${{ vars.GOOGLE_MYAPP }}:latest -f Dockerfile .
 
       - name: Push Image
         run: |
@@ -138,3 +146,13 @@ jobs:
         with:
           name: zap-report
           path: report.xml
+
+
+  Monitoring:
+    needs: [Deploy, DAST]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: New Relic enabling agent
+        run: |
+          curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=NRAK-62D3OZI6U40RYZXCDPTPAW1TPZ1 NEW_RELIC_ACCOUNT_ID=6276743 /usr/local/bin/newrelic install --tag project:devopslab-impacta

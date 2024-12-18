@@ -1,8 +1,13 @@
 from flask import Flask, render_template
 from flask_talisman import Talisman
+from flask_wtf.csrf import CSRFProtect
+import newrelic.agent
+
+newrelic.agent.initialize('/home/myapp/newrelic.ini')
 
 # Inicializa o app Flask
 app = Flask(__name__)
+csrf = CSRFProtect(app)
 
 # Definindo a política de segurança de conteúdo
 csp = {
