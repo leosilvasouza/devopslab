@@ -6,7 +6,7 @@ RUN adduser --system --home /home/myapp  myapp
 USER myapp
 
 # Instalar sudo
-RUN apt-get update && apt-get install -y sudo && usermod -aG sudo myapp
+RUN sudo apt-get update && apt-get install -y sudo && usermod -aG sudo myapp
 
 # Definindo o diretório onde a aplicação será armazenada
 WORKDIR /home/myapp
