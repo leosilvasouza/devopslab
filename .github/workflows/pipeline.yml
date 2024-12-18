@@ -94,7 +94,7 @@ jobs:
 
       - name: Enable New Relic Agent to CiCd
         run: |
-          curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=${{ secrets.NEWRELIC_KEY }} NEW_RELIC_ACCOUNT_ID=${{ vars.NEW_RELIC_ID}} /usr/local/bin/newrelic install -y --tag project:devosplab-impacta
+          curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=${{ secrets.NEWRELIC_KEY }} NEW_RELIC_ACCOUNT_ID=${{ vars.NEWRELIC_ID}} /usr/local/bin/newrelic install -y --tag project:devosplab-impacta
 
       - name: Cloud Run Deploy
         id: deploy
