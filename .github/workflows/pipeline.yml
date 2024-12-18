@@ -50,6 +50,11 @@ jobs:
         
       - name: Install Requirements
         run:  pip install flask flask-wtf pytest pytest-cov
+
+      - name: Criar arquivo newrelic.ini para testes
+        run: |
+          echo "[newrelic]" > /home/myapp/newrelic.ini
+          echo "license_key = ${{ secrets.NEWRELIC_KEY}}" >> /home/myapp/newrelic.ini   
               
       - name: Unit Test
         run: |
@@ -136,7 +141,7 @@ jobs:
       - name: ZAP Proxy Scan
         uses: zaproxy/action-full-scan@v0.8.0
         with:
-          token: ${{ secrets.ZAP_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           target: "${{ needs.Deploy.outputs.deployment_url }}"
           rules_file_name: '.zap/rules.json'
 
