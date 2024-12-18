@@ -1,12 +1,15 @@
 # Use uma imagem oficial do Python
 FROM python:3
 
+
+
 # Adicionando um usuário de sistema
 RUN adduser --system --home /home/myapp  myapp
 USER myapp
 
+USER root
 # Instalar sudo
-RUN sudo apt-get update && apt-get install -y sudo && usermod -aG sudo myapp
+RUN apt-get update && apt-get install -y sudo && usermod -aG sudo myapp
 
 # Definindo o diretório onde a aplicação será armazenada
 WORKDIR /home/myapp
