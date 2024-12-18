@@ -53,12 +53,13 @@ jobs:
 
       - name: Criar arquivo newrelic.ini para testes
         run: |
+          ls -lha
           sudo mkdir -p /home/myapp/
           sudo chmod -R 644 /home/myapp/
           sudo touch /home/myapp/newrelic.ini
           sudo chmod 644 /home/myapp/newrelic.ini
-          echo "[newrelic]" > /home/myapp/newrelic.ini
-          echo "license_key = ${{ secrets.NEWRELIC_KEY}}" >> /home/myapp/newrelic.ini   
+          sudo echo "[newrelic]" > /home/myapp/newrelic.ini
+          sudo echo "license_key = ${{ secrets.NEWRELIC_KEY}}" >> /home/myapp/newrelic.ini   
               
       - name: Unit Test
         run: |
