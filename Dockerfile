@@ -1,8 +1,6 @@
 # Use uma imagem oficial do Python
 FROM python:3
 
-
-
 # Adicionando um usuário de sistema
 RUN adduser --system --home /home/myapp  myapp
 USER myapp
