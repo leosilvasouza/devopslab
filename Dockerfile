@@ -21,9 +21,11 @@ RUN pip install --user --trusted-host pypi.python.org -r requirements.txt
 
 # Instalando agente New Relic
 WORKDIR /home/myapp
-
+ARG NEW_RELIC_LICENSE_KEY
+# Declarando variável que está consumindo o argumento sendo passado na pipeline no --build-arg NEWRELIC_KEY que por sua vez pega o valor da secrets do github
+ENV NEWRELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
 RUN pip install newrelic
-ENV NEW_RELIC_CONFIG_FILE=/home/myapp/newrelic.ini NEW_RELIC_LICENSE_KEY=licensekey
+RUN newrelic-admin generate-config $NEWRELIC_LICENSE_KEY /home/myapp/newrelic.ini
 RUN NEW_RELIC_CONFIG_FILE=/home/myapp/newrelic.ini newrelic-admin run-program python app.py
 
 # Instalar o Nginx e o supervisord
