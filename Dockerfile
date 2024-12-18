@@ -17,7 +17,7 @@ COPY ./nginx/default.conf /etc/nginx/sites-available/default
 COPY ./nginx/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Expor as portas necessárias
-EXPOSE 80
+EXPOSE 8080
 EXPOSE 5000
 
 # Iniciar o supervisord que gerenciará o Nginx e o Gunicorn
