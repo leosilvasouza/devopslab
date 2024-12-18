@@ -142,13 +142,3 @@ jobs:
         with:
           name: zap-report
           path: report.xml
-
-
-  Monitoring:
-    needs: [Deploy, DAST]
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: New Relic enabling agent
-        run: |
-          curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=${{ secrets.NEWRELIC_KEY }} NEW_RELIC_ACCOUNT_ID=6276743 /usr/local/bin/newrelic install --tag project:devopslab-impacta
