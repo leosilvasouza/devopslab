@@ -1,0 +1,13 @@
+# robots.txt para o site
+
+# Permitir acesso a todos os bots para o site inteiro
+User-agent: *
+Disallow: /admin/   # Bloqueia o acesso à página administrativa (se existir)
+Disallow: /private/ # Bloqueia o acesso a diretórios privados
+Allow: /public/     # Permite acesso ao diretório público
+Allow: /images/     # Permite acesso ao diretório de imagens
+Allow: /css/        # Permite acesso ao diretório de CSS
+Allow: /js/         # Permite acesso ao diretório de JavaScript
+
+# Sitemap do site
+Sitemap: https://leosilvasouza-fgxq5tbfwq-ue.a.run.app/sitemap.xml
