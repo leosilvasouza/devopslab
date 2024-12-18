@@ -151,4 +151,4 @@ jobs:
     steps:
       - name: New Relic enabling agent
         run: |
-          curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=NRAK-62D3OZI6U40RYZXCDPTPAW1TPZ1 NEW_RELIC_ACCOUNT_ID=6276743 /usr/local/bin/newrelic install --tag project:devopslab-impacta
+          curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=${{ secrets.NEWRELIC_KEY }} NEW_RELIC_ACCOUNT_ID=6276743 /usr/local/bin/newrelic install --tag project:devopslab-impacta
