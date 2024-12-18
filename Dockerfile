@@ -61,4 +61,4 @@ EXPOSE 8080
 EXPOSE 5000
 
 # Iniciar o supervisord que gerenciará o Nginx e o Gunicorn
-CMD ["newrelic-admin", "run-program", "/usr/bin/supervisord"]
+CMD ["run-program", "/usr/bin/supervisord"]
