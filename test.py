@@ -15,10 +15,19 @@ class Test(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
 
     def test_conteudo(self):
+        # Cria um cliente de teste
+        with app.test_client() as client:
+            # Faz a requisição GET para a página inicial
+            response = client.get('/')
+            
+            # Verifica se a resposta contém partes do conteúdo esperado
+            self.assertIn('Bem-vindo ao App de Leonardo Silva Souza', response.data.decode('utf-8'))
+            self.assertIn('Produtos', response.data.decode('utf-8'))
+            self.assertIn('Termos de Uso', response.data.decode('utf-8'))
+            self.assertIn('Contato', response.data.decode('utf-8'))
         # Verifica o conteúdo retornado pela página
         result = self.client.get('/')
         print(result.data.decode('utf-8'))  # Adiciona um print para depuração
-        self.assertEqual(result.data.decode('utf-8'), "App do Leonardo Silva Souza github: leosilvasouza")
 
 if __name__ == '__main__':
     unittest.main()
