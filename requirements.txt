@@ -1,4 +1,5 @@
-flask==2.2.5
+flask==2.2.2
 flask-wtf
 gunicorn
-flask-talisman
+werkzeug==2.2.3
+flask-talisman==0.8.0
