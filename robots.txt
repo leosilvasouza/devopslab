@@ -8,6 +8,9 @@ Allow: /public/     # Permite acesso ao diretório público
 Allow: /images/     # Permite acesso ao diretório de imagens
 Allow: /css/        # Permite acesso ao diretório de CSS
 Allow: /js/         # Permite acesso ao diretório de JavaScript
+Allow: /products/   # Permite acesso ao diretório de Produtos
+Allow: /contact/    # Permite acesso ao diretório de Contato
+Allow: /terms/      # Permite acesso ao diretório de Termos de uso
 
 # Sitemap do site
 Sitemap: https://leosilvasouza-fgxq5tbfwq-ue.a.run.app/sitemap.xml

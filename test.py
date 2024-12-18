@@ -21,7 +21,7 @@ class Test(unittest.TestCase):
             response = client.get('/')
             
             # Verifica se a resposta contém partes do conteúdo esperado
-            self.assertIn('Bem-vindo ao App de Leonardo Silva Souza', response.data.decode('utf-8'))
+            self.assertIn('Bem-vindo ao Portifólio de Leonardo Silva Souza', response.data.decode('utf-8'))
             self.assertIn('Produtos', response.data.decode('utf-8'))
             self.assertIn('Termos de Uso', response.data.decode('utf-8'))
             self.assertIn('Contato', response.data.decode('utf-8'))

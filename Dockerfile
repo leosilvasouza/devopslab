@@ -25,5 +25,11 @@ EXPOSE 80
 # Expor a porta 5000 para o Gunicorn
 EXPOSE 5000
 
-# Rodar o Nginx e o Gunicorn
-CMD service nginx start && gunicorn -b 0.0.0.0:5000 app:app
+# Executar a inicialização do nginx
+service nginx start 
+
+# Execução do gunicorn na porta 5000 exposta
+gunicorn -b 0.0.0.0:5000
+
+# Rodar a aplicação em python
+CMD ["app:app"]
