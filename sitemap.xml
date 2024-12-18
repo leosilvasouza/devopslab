@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- Página principal -->
+    <url>
+        <loc>https://leosilvasouza-fgxq5tbfwq-ue.a.run.app/</loc>
+        <lastmod>2024-12-17</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- Página de contato -->
+    <url>
+        <loc>https://leosilvasouza-fgxq5tbfwq-ue.a.run.app/contact</loc>
+        <lastmod>2024-12-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Página de produtos -->
+    <url>
+        <loc>https://leosilvasouza-fgxq5tbfwq-ue.a.run.app/products</loc>
+        <lastmod>2024-12-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- Página de termos de uso -->
+    <url>
+        <loc>https://leosilvasouza-fgxq5tbfwq-ue.a.run.app/terms</loc>
+        <lastmod>2024-12-17</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
+    </url>
+</urlset>
