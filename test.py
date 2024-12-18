@@ -1,22 +1,13 @@
 # -*- coding: utf-8 -*-
-from app import app
-from flask_talisman import Talisman
+from app import app  # Não é necessário importar o Talisman aqui
 import unittest
-
-# Definindo a política de segurança de conteúdo (csp)
-csp = {
-    'default-src': '\'self\'',
-    'script-src': '\'self\'',
-    'style-src': '\'self\''
-}
 
 class Test(unittest.TestCase):
     def setUp(self):
         # Usa o contexto do Flask sem precisar do test_client
         app.config['TESTING'] = True
         app.config['PRESERVE_CONTEXT_ON_EXCEPTION'] = False  # Evita redirecionamentos indesejados
-        Talisman(app, content_security_policy=csp, force_https=False)  # Configura Talisman
-        self.client = app.test_client()  # Inicializa o client depois da configuração do Talisman
+        self.client = app.test_client()  # Inicializa o client aqui
 
     def test_requisicao(self):
         # Envia uma requisição GET para a URL e verifica o status
