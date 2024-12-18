@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from app import app
+from flask_talisman import Talisman
 import unittest
 
 class Test(unittest.TestCase):
@@ -8,7 +9,7 @@ class Test(unittest.TestCase):
         app.config['TESTING'] = True
         app.config['PRESERVE_CONTEXT_ON_EXCEPTION'] = False  # Evita redirecionamentos indesejados
         app.config['PREFERRED_URL_SCHEME'] = 'http' # Força uso de HTTP no teste
-        Talisman(app, content_security_policy=csp, force_https=False)
+        Talisman(app, content_security_policy=csp, force_https=False) # Configura Talisman
         self.client = app.test_client()
 
     def test_requisicao(self):
