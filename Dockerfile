@@ -5,6 +5,9 @@ FROM python:3
 RUN adduser --system --home /home/myapp  myapp
 USER myapp
 
+# Instalar sudo
+RUN apt-get update && apt-get install -y sudo && usermod -aG sudo myapp
+
 # Definindo o diretório onde a aplicação será armazenada
 WORKDIR /home/myapp
 
@@ -29,7 +32,9 @@ ENV NEWRELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY_ARG}
 ENV NEWRELIC_ID=$NEWRELIC_ID_ARG 
 
 # Baixando e instalando o New Relic CLI
+USER root
 RUN curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash 
+USER myapp
 ENV NEW_RELIC_API_KEY="$NEWRELIC_LICENSE_KEY" 
 ENV NEW_RELIC_ACCOUNT_ID="$NEWRELIC_ID" 
 RUN /usr/local/bin/newrelic install -y --tag project:devopslab-impacta
