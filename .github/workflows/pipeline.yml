@@ -65,9 +65,9 @@ jobs:
           username: _json_key
           password: '${{ secrets.GOOGLE_CREDENTIALS }}'
       
-      - name: New Relic License
-        run: |
-          sed -i "s/licensekey/${{ secrets.NEWRELIC_KEY }}/g" Dockerfile    
+      # - name: New Relic License
+      #   run: |
+      #     sed -i "s/licensekey/${{ secrets.NEWRELIC_KEY }}/g" Dockerfile    
 
       - name: Build Image
         run: |
