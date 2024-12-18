@@ -29,18 +29,17 @@ ENV NEWRELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY_ARG}
 ENV NEWRELIC_ID=$NEWRELIC_ID_ARG 
 
 # Baixando e instalando o New Relic CLI
-RUN curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash -s -- -n && \
-        # Configurando o agente New Relic com a chave de licença
-         sudo NEW_RELIC_API_KEY="$NEWRELIC_LICENSE_KEY" \
-         NEW_RELIC_ACCOUNT_ID="$NEWRELIC_ID" \
-         /usr/local/bin/newrelic install --skip-prompt --tag project:devopslab-impacta && \
+RUN curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY="$NEWRELIC_LICENSE_KEY" NEW_RELIC_ACCOUNT_ID="$NEWRELIC_ID" /usr/local/bin/newrelic install -y --tag project:devopslab-impacta && \
          # Gerando arquivo newrelic.ini
-         newrelic-admin generate-config "$NEWRELIC_LICENSE_KEY" /home/myapp/newrelic.ini && \
-         # Instalar o Nginx e o supervisord
-         apt-get update && \
-         apt-get install -y nginx supervisor && \
-         apt-get clean && \
-         rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
+         newrelic-admin generate-config "$NEWRELIC_LICENSE_KEY" /home/myapp/newrelic.ini
+
+         
+WORKDIR /home/myapp
+# Instalar o Nginx e o supervisord
+RUN apt-get update && \
+        apt-get install -y nginx supervisor && \
+        apt-get clean && \
+        rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 
 # Copiar o arquivo de configuração do Nginx
