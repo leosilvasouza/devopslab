@@ -9,11 +9,14 @@ newrelic.agent.initialize('/home/myapp/newrelic.ini')
 app = Flask(__name__)
 csrf = CSRFProtect(app)
 
+# Definindo constantes para repetição de strings
+SELF = "'self'"
+
 # Definindo a política de segurança de conteúdo
 csp = {
-    'default-src': '\'self\'',
-    'script-src': '\'self\'',
-    'style-src': '\'self\''
+    'default-src': SELF,
+    'script-src': SELF,
+    'style-src': SELF
 }
 
 # Configurações de segurança com Flask-Talisman
