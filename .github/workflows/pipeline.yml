@@ -53,7 +53,6 @@ jobs:
               
       - name: Unit Test
         run: |
-          python -m unittest -v test
           coverage run --source=app -m pytest test.py
           coverage report -m
           coverage xml -i
@@ -67,7 +66,11 @@ jobs:
 
       - name: Build Image
         run: |
-          docker build --build-arg NEW_RELIC_LICENSE_KEY=${{ secrets.NEWRELIC_KEY }} -t ${{ vars.GOOGLE_ARTIFACT }}/${{ vars.GOOGLE_PROJECT_ID }}/${{ vars.GOOGLE_REPONAME }}/${{ vars.GOOGLE_MYAPP }}:latest -f Dockerfile .
+          docker build \
+              --build-arg NEW_RELIC_LICENSE_KEY_ARG=${{ secrets.NEWRELIC_KEY }} \
+              --build-arg NEWRELIC_ID_ARG=${{ vars.NEWRELIC_ID }} \
+              -t ${{ vars.GOOGLE_ARTIFACT }}/${{ vars.GOOGLE_PROJECT_ID }}/${{ vars.GOOGLE_REPONAME }}/${{ vars.GOOGLE_MYAPP }}:latest \
+              -f Dockerfile .
 
       - name: Push Image
         run: |

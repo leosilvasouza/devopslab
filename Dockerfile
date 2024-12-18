@@ -21,16 +21,18 @@ RUN pip install --user --trusted-host pypi.python.org -r requirements.txt
 
 # Instalando agente New Relic
 WORKDIR /home/myapp
-ARG NEW_RELIC_LICENSE_KEY
+ARG NEW_RELIC_LICENSE_KEY_ARG
+ARG NEWRELIC_ID_ARG
 
 # Declarando variável que está consumindo o argumento sendo passado na pipeline no --build-arg
-ENV NEWRELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
+ENV NEWRELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY_ARG}
+ENV NEWRELIC_ID=$NEWRELIC_ID_ARG 
 
 # Baixando e instalando o New Relic CLI
 RUN curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash -s -- -n
 
 # Configurando o agente New Relic com a chave de licença
-RUN sudo NEW_RELIC_API_KEY=$NEWRELIC_LICENSE_KEY NEW_RELIC_ACCOUNT_ID=6276743 /usr/local/bin/newrelic install --skip-prompt --tag project:devopslab-impacta
+RUN sudo NEW_RELIC_API_KEY=$NEWRELIC_LICENSE_KEY NEW_RELIC_ACCOUNT_ID=$NEWRELIC_ID /usr/local/bin/newrelic install --skip-prompt --tag project:devopslab-impacta
 
 # Gerando arquivo newrelic.ini
 RUN newrelic-admin generate-config $NEWRELIC_LICENSE_KEY /home/myapp/newrelic.ini
