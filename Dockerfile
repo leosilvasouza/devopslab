@@ -44,6 +44,7 @@ RUN /usr/local/bin/newrelic install -y --tag project:devopslab-impacta
 
          
 WORKDIR /home/myapp
+USER root
 # Instalar o Nginx e o supervisord
 RUN apt-get update && \
         apt-get install -y nginx supervisor && \
