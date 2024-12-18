@@ -29,10 +29,9 @@ ENV NEWRELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY_ARG}
 ENV NEWRELIC_ID=$NEWRELIC_ID_ARG 
 
 # Baixando e instalando o New Relic CLI
-RUN curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash -s -- -n
-
-# Configurando o agente New Relic com a chave de licença
-RUN sudo NEW_RELIC_API_KEY="$NEWRELIC_LICENSE_KEY" \
+RUN curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash -s -- -n && \
+        # Configurando o agente New Relic com a chave de licença
+         sudo NEW_RELIC_API_KEY="$NEWRELIC_LICENSE_KEY" \
          NEW_RELIC_ACCOUNT_ID="$NEWRELIC_ID" \
          /usr/local/bin/newrelic install --skip-prompt --tag project:devopslab-impacta && \
          # Gerando arquivo newrelic.ini
