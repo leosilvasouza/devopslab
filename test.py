@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from app import app  # Não é necessário importar o Talisman aqui
+from app import app
 import unittest
 
 class Test(unittest.TestCase):
