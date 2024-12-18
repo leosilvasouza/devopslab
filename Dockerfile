@@ -42,9 +42,6 @@ ENV NEW_RELIC_API_KEY="$NEWRELIC_LICENSE_KEY"
 ENV NEW_RELIC_ACCOUNT_ID="$NEWRELIC_ID" 
 RUN /usr/local/bin/newrelic install -y --tag project:devopslab-impacta
 
-# Gerando arquivo newrelic.ini
-RUN newrelic-admin generate-config "$NEWRELIC_LICENSE_KEY" /home/myapp/newrelic.ini
-
          
 WORKDIR /home/myapp
 # Instalar o Nginx e o supervisord
