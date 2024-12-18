@@ -1,9 +1,9 @@
 from flask import Flask, render_template
 from flask_talisman import Talisman
 from flask_wtf.csrf import CSRFProtect
-import newrelic.agent
+#import newrelic.agent
 
-newrelic.agent.initialize('/home/myapp/newrelic.ini')
+#newrelic.agent.initialize('/home/myapp/newrelic.ini')
 
 # Inicializa o app Flask
 app = Flask(__name__)
