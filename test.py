@@ -3,6 +3,14 @@ from app import app
 from flask_talisman import Talisman
 import unittest
 
+# Criando variáveis
+# Definindo a política de segurança de conteúdo (csp)
+csp = {
+    'default-src': '\'self\'',
+    'script-src': '\'self\'',
+    'style-src': '\'self\''
+}
+
 class Test(unittest.TestCase):
     def setUp(self):
         # Usa o contexto do Flask sem precisar do test_client
