@@ -92,6 +92,10 @@ jobs:
         with:
           credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
 
+      - name: Enable New Relic Agent to CiCd
+        run: |
+          curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=${{ secrets.NEWRELIC_KEY }} NEW_RELIC_ACCOUNT_ID=${{ vars.NEW_RELIC_ID}} /usr/local/bin/newrelic install -y --tag project:devosplab-impacta
+
       - name: Cloud Run Deploy
         id: deploy
         uses: 'google-github-actions/deploy-cloudrun@v2'  # https://github.com/marketplace/actions/deploy-to-cloud-run
