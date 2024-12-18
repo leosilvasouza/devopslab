@@ -51,14 +51,9 @@ jobs:
       - name: Install Requirements
         run:  pip install flask flask-wtf pytest pytest-cov
 
-      - name: Criar arquivo newrelic.ini para testes
+      - name: Autenticando arquivo newrelic.ini
         run: |
           ls -lha
-          sudo mkdir -p /home/myapp/
-          sudo chmod -R 644 /home/myapp/
-          sudo touch /home/myapp/newrelic.ini
-          sudo chmod 644 /home/myapp/newrelic.ini
-          sudo echo "[newrelic]" > /home/myapp/newrelic.ini
           sudo echo "license_key = ${{ secrets.NEWRELIC_KEY}}" >> /home/myapp/newrelic.ini   
               
       - name: Unit Test
