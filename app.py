@@ -4,13 +4,15 @@ from flask_talisman import Talisman
 # Inicializa o app Flask
 app = Flask(__name__)
 
-# Configurações de segurança com Flask-Talisman
+# Definindo a política de segurança de conteúdo
 csp = {
     'default-src': '\'self\'',
     'script-src': '\'self\'',
     'style-src': '\'self\''
 }
-Talisman(app, content_security_policy=csp)
+
+# Configurações de segurança com Flask-Talisman
+Talisman(app, content_security_policy=csp, force_https=False)
 
 @app.route("/")
 def pagina_inicial():
