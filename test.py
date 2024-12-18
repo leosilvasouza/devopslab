@@ -4,16 +4,19 @@ import unittest
 
 class Test(unittest.TestCase):
     def setUp(self):
-        # cria uma instância do unittest, precisa do nome "setUp"
-        self.app = app.test_client()
-
-        # envia uma requisicao GET para a URL
-        self.result = self.app.get('/')
+        # Usa o contexto do Flask sem precisar do test_client
+        app.config['TESTING'] = True
+        self.client = app.test_client()
 
     def test_requisicao(self):
-        # compara o status da requisicao (precisa ser igual a 200)
-        self.assertEqual(self.result.status_code, 200)
+        # Envia uma requisição GET para a URL e verifica o status
+        result = self.client.get('/')
+        self.assertEqual(result.status_code, 200)
 
     def test_conteudo(self):
-        # verifica o retorno do conteudo da pagina
-        self.assertEqual(self.result.data.decode('utf-8'), "App do Leonardo Silva Souza github: leosilvasouza")
+        # Verifica o conteúdo retornado pela página
+        result = self.client.get('/')
+        self.assertEqual(result.data.decode('utf-8'), "App do Leonardo Silva Souza github: leosilvasouza")
+
+if __name__ == '__main__':
+    unittest.main()
