@@ -1,6 +1,6 @@
 flask==2.2.5
 gunicorn
-werkzeug==3.0.6
+werkzeug==3.1.4
 flask-talisman==0.8.0
 flask-wtf
 newrelic
